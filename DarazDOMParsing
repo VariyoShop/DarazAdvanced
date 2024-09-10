@@ -1,0 +1,23 @@
+<?php
+// Load the HTML from the file
+$html = file_get_contents('path_to_your_uploaded_html_file.html');
+
+// Create a new DOMDocument and load the HTML
+$dom = new DOMDocument();
+libxml_use_internal_errors(true); // Ignore HTML parsing errors
+$dom->loadHTML($html);
+libxml_clear_errors();
+
+// Create an XPath object
+$xpath = new DOMXPath($dom);
+
+// Query for the price using XPath
+$price = $xpath->query('//span[@class="pdp-price pdp-price_type_normal pdp-price_color_orange pdp-price_size_xl"]');
+
+if ($price->length > 0) {
+    // Display the price
+    echo "Price: " . trim($price[0]->nodeValue);
+} else {
+    echo "Price not found.";
+}
+?>
